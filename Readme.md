@@ -1,8 +1,10 @@
+
 = Quickbooks Merchant Services plug-in for WP e-Commerce
 
 This plug-in uses the WP e-Commerce Merchant API 2.0 to process payments through Quickbooks Merchant Services.
 
 Although QBMS does support recurring payments (i.e. subscriptions), this implementation currently does not.
+
 
 == Installation
 
