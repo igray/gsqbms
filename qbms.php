@@ -217,11 +217,14 @@ EOXML;
     $response = array();
     $signon = $xml->xpath('/QBMSXML/SignonMsgsRs/SignonDesktopRs');
     $response['signon_status'] = (string) $signon[0]['statusCode'];
-    $charge = $xml->xpath('/QBMSXML/QBMSXMLMsgsRs/CustomerCreditCardChargeRs');
-    $response['response_code'] = (string) $charge[0]['statusCode'];
-    $response['response_description'] = (string) $charge[0]['statusMessage'];
-    foreach($charge[0]->children() as $child) {
-      $response[$child->getName()] = (string) $child;
+    if ($response['signon_status'] == "0") {
+      $charge = $xml->xpath('/QBMSXML/QBMSXMLMsgsRs/CustomerCreditCardChargeRs');
+      $response['response_code'] = (string) $charge[0]['statusCode'];
+      $response['response_description'] = (string) $charge[0]['statusMessage'];
+      var_dump($charge);
+      foreach($charge[0]->children() as $child) {
+        $response[$child->getName()] = (string) $child;
+      }
     }
     return $response;
   }
