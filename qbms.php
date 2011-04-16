@@ -152,14 +152,19 @@ EOXML;
     //exit();
 
     if( ! $parsed_response || $parsed_response['signon_status'] != "0") {
+      error_log("QBMS SignOn Error:" . print_r($parsed_response,true));
       $this->set_error_message(__("There was an error contacting the payment gateway, please try again later.", 'wpsc'));
       $this->return_to_checkout();
       return false;
     }
 
     if($parsed_response['response_code'] != "0") {
+      error_log("QBMS Response Error: " . print_r($parsed_response, true));
       $this->set_transaction_details( $parsed_response['CreditCardTransID'], 1 );
       $this->set_error_message(__('Your transaction was declined. Please check your credit card details and try again.', 'wpsc'));
+      $_SESSION['WpscGatewayErrorMessage'] = __('Your transaction was declined. Please check your credit card details and try again.', 'wpsc');
+      $_SESSION['WpscGatewayErrorCode'] = $parsed_response['response_code'];
+      $_SESSION['WpscGatewayErrorDescription'] = $parsed_response['response_description'];
       $this->set_auth_code( $parsed_response['response_description'] );
       $this->return_to_checkout();
       return false;
