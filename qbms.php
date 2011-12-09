@@ -185,7 +185,7 @@ EOXML;
     $auth_code = $wpdb->escape( $auth_code );
     $wpdb->query( "UPDATE `" . WPSC_TABLE_PURCHASE_LOGS . "` SET `authcode` = '{$auth_code}'  WHERE `id` = " . absint( $this->purchase_id ) . " LIMIT 1" );
   }
-  
+
   /**
    * parse QBMS response, translate xmldoc into array.
    * @access public
@@ -226,7 +226,7 @@ EOXML;
       $charge = $xml->xpath('/QBMSXML/QBMSXMLMsgsRs/CustomerCreditCardChargeRs');
       $response['response_code'] = (string) $charge[0]['statusCode'];
       $response['response_description'] = (string) $charge[0]['statusMessage'];
-      var_dump($charge);
+      //var_dump($charge);
       foreach($charge[0]->children() as $child) {
         $response[$child->getName()] = (string) $child;
       }
